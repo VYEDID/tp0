@@ -9,15 +9,39 @@ int main(void)
 	char* puerto;
 	char* valor;
 
-	t_log* logger;
+	t_log* logger; // es un log create
 	t_config* config;
 
 	/* ---------------- LOGGING ---------------- */
 
-	logger = iniciar_logger();
-
 	// Usando el logger creado previamente
 	// Escribi: "Hola! Soy un log"
+
+	logger = iniciar_logger();
+
+
+
+	FILE *file_opened = tp0.log;
+
+	if (file != NULL) {
+		file_opened = txt_open_for_append(file);
+
+		if (file_opened == NULL) {
+			perror("Cannot create/open log file");
+			free(logger);
+			return NULL;
+		}
+	}
+
+	logger->file = file_opened;
+	logger->is_active_console = is_active_console;
+	logger->detail = detail;
+	logger->pid = process_getpid();
+	logger->program_name = string_duplicate(program_name);
+	return logger;
+}
+
+	
 
 
 	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
@@ -55,8 +79,9 @@ int main(void)
 t_log* iniciar_logger(void)
 {
 	t_log* nuevo_logger;
-
+	nuevo_logger = malloc(sizeof(t_log));
 	return nuevo_logger;
+
 }
 
 t_config* iniciar_config(void)
