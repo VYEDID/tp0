@@ -21,32 +21,9 @@ int main(void)
 
 
 
-	FILE *file_opened = tp0.log;
+/*	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
 
-	if (file != NULL) {
-		file_opened = txt_open_for_append(file);
-
-		if (file_opened == NULL) {
-			perror("Cannot create/open log file");
-			free(logger);
-			return NULL;
-		}
-	}
-
-	logger->file = file_opened;
-	logger->is_active_console = is_active_console;
-	logger->detail = detail;
-	logger->pid = process_getpid();
-	logger->program_name = string_duplicate(program_name);
-	return logger;
-}
-
-	
-
-
-	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
-
-	config = iniciar_config();
+	// config = iniciar_config();
 
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
@@ -56,42 +33,51 @@ int main(void)
 
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
-	leer_consola(logger);
+	// leer_consola(logger);
 
 	/*---------------------------------------------------PARTE 3-------------------------------------------------------------*/
 
 	// ADVERTENCIA: Antes de continuar, tenemos que asegurarnos que el servidor esté corriendo para poder conectarnos a él
 
 	// Creamos una conexión hacia el servidor
-	conexion = crear_conexion(ip, puerto);
+	// conexion = crear_conexion(ip, puerto);
 
 	// Enviamos al servidor el valor de CLAVE como mensaje
 
 	// Armamos y enviamos el paquete
-	paquete(conexion);
+	// paquete(conexion);
 
-	terminar_programa(conexion, logger, config);
+	// terminar_programa(conexion, logger, config);
 
 	/*---------------------------------------------------PARTE 5-------------------------------------------------------------*/
 	// Proximamente
+
+	return 0 ;
 }
 
 t_log* iniciar_logger(void)
 {
-	t_log* nuevo_logger;
-	nuevo_logger = malloc(sizeof(t_log));
-	return nuevo_logger;
+
+	t_log* nuevoLogger = malloc(sizeof(t_log));
+	char * archivo = "tp0.log";
+	char * nombreProceso = "Proceso fachero";
+	bool procesoActivo = true;
+	t_log_level levelInfo = LOG_LEVEL_INFO;
+
+	nuevoLogger = log_create(archivo , nombreProceso , procesoActivo, levelInfo);
+
+	return nuevoLogger;
 
 }
 
-t_config* iniciar_config(void)
+/*t_config* iniciar_config(void)
 {
 	t_config* nuevo_config;
 
 	return nuevo_config;
 }
 
-void leer_consola(t_log* logger)
+/* void leer_consola(t_log* logger)
 {
 	char* leido;
 
@@ -122,4 +108,4 @@ void terminar_programa(int conexion, t_log* logger, t_config* config)
 {
 	/* Y por ultimo, hay que liberar lo que utilizamos (conexion, log y config) 
 	  con las funciones de las commons y del TP mencionadas en el enunciado */
-}
+// }
