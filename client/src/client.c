@@ -17,14 +17,31 @@ int main(void)
 	// Usando el logger creado previamente
 	// Escribi: "Hola! Soy un log"
 
-	logger = iniciar_logger();
+
+	void loggearse(char* oracion){
+		logger = iniciar_logger();
+		log_info(logger,oracion);
+		log_destroy(logger);
+	}	
+
+	loggearse("Hola! Soy un log");
+	
 
 
 
 /*	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
 
-	// config = iniciar_config();
+	config = iniciar_config();
 
+	char* key = CLAVE;
+	char* keyString = config_get_string_value(config,key);
+
+	if(config_has_property(config,keyString){
+
+		loggearse(keyString);
+		ip =
+	}
+	
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
 
@@ -66,13 +83,15 @@ t_log* iniciar_logger(void)
 
 	nuevoLogger = log_create(archivo , nombreProceso , procesoActivo, levelInfo);
 
-	return nuevoLogger;
+	return nuevoLogger; //probar porque falla el log create
 
 }
 
-/*t_config* iniciar_config(void)
+t_config* iniciar_config(void)
 {
 	t_config* nuevo_config;
+	char * path = "tp0.config"; 
+	nuevo_confg = config_create(path);
 
 	return nuevo_config;
 }
